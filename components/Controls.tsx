@@ -1,37 +1,16 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { ZoomLevel } from '@/hooks/useTheme'
 
 interface ControlsProps {
-  zoom: ZoomLevel
-  onZoomChange: (zoom: ZoomLevel) => void
   theme: 'dark' | 'light'
   onThemeToggle: () => void
-  showDetailedStats: boolean
-  onStatsToggle: () => void
-  showMilestones: boolean
-  onMilestonesToggle: () => void
   onSettingsOpen: () => void
   onExport: () => void
   onEditDOB: () => void
 }
 
 // Icons as inline SVGs for minimal dependencies
-const ZoomInIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="11" cy="11" r="8" />
-    <path d="M21 21l-4.35-4.35M11 8v6M8 11h6" />
-  </svg>
-)
-
-const ZoomOutIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="11" cy="11" r="8" />
-    <path d="M21 21l-4.35-4.35M8 11h6" />
-  </svg>
-)
-
 const SunIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <circle cx="12" cy="12" r="5" />
@@ -42,18 +21,6 @@ const SunIcon = () => (
 const MoonIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-  </svg>
-)
-
-const StatsIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M18 20V10M12 20V4M6 20v-6" />
-  </svg>
-)
-
-const FlagIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" />
   </svg>
 )
 
@@ -89,22 +56,13 @@ const EditIcon = () => (
   </svg>
 )
 
-const zoomLevels: ZoomLevel[] = ['tiny', 'small', 'medium']
-
 export default function Controls({
-  zoom,
-  onZoomChange,
   theme,
   onThemeToggle,
-  showDetailedStats,
-  onStatsToggle,
-  showMilestones,
-  onMilestonesToggle,
   onSettingsOpen,
   onExport,
   onEditDOB,
 }: ControlsProps) {
-  const [isVisible, setIsVisible] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handleFullscreenToggle = useCallback(() => {
@@ -123,78 +81,19 @@ export default function Controls({
     }
   }, [])
 
-  const handleZoomIn = useCallback(() => {
-    const currentIndex = zoomLevels.indexOf(zoom)
-    if (currentIndex < zoomLevels.length - 1) {
-      onZoomChange(zoomLevels[currentIndex + 1])
-    }
-  }, [zoom, onZoomChange])
-
-  const handleZoomOut = useCallback(() => {
-    const currentIndex = zoomLevels.indexOf(zoom)
-    if (currentIndex > 0) {
-      onZoomChange(zoomLevels[currentIndex - 1])
-    }
-  }, [zoom, onZoomChange])
-
   return (
-    <div
-      className={`controls-wrapper fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 ${
-        isVisible ? 'visible' : ''
-      }`}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    >
-      <div className="controls-bar flex items-center gap-1 p-2 rounded-lg border">
-        {/* Zoom controls */}
-        <button
-          type="button"
-          onClick={handleZoomOut}
-          className="icon-btn"
-          title="Zoom out (-)"
-          disabled={zoom === 'tiny'}
-        >
-          <ZoomOutIcon />
-        </button>
-        <span className="text-xs text-gray-400 px-2 w-12 text-center">{zoom}</span>
-        <button
-          type="button"
-          onClick={handleZoomIn}
-          className="icon-btn"
-          title="Zoom in (+)"
-          disabled={zoom === 'medium'}
-        >
-          <ZoomInIcon />
-        </button>
+    <div className="header-controls flex items-center justify-between w-full px-4">
+      {/* Left side - Edit DOB */}
+      <button type="button" onClick={onEditDOB} className="icon-btn" title="Edit date of birth">
+        <EditIcon />
+      </button>
 
-        <div className="w-px h-4 bg-gray-600 mx-2" />
-
-        {/* Stats toggle */}
-        <button
-          type="button"
-          onClick={onStatsToggle}
-          className={`icon-btn ${showDetailedStats ? '!text-white' : ''}`}
-          title="Toggle detailed stats"
-        >
-          <StatsIcon />
-        </button>
-
-        {/* Milestones toggle */}
-        <button
-          type="button"
-          onClick={onMilestonesToggle}
-          className={`icon-btn ${showMilestones ? '!text-white' : ''}`}
-          title="Toggle milestones"
-        >
-          <FlagIcon />
-        </button>
-
+      {/* Right side - Controls */}
+      <div className="flex items-center gap-1">
         {/* Theme toggle */}
         <button type="button" onClick={onThemeToggle} className="icon-btn" title="Toggle theme">
           {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </button>
-
-        <div className="w-px h-4 bg-gray-600 mx-2" />
 
         {/* Settings */}
         <button type="button" onClick={onSettingsOpen} className="icon-btn" title="Settings">
@@ -210,19 +109,7 @@ export default function Controls({
         <button type="button" onClick={handleFullscreenToggle} className="icon-btn" title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}>
           {isFullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
         </button>
-
-        <div className="w-px h-4 bg-gray-600 mx-2" />
-
-        {/* Edit DOB */}
-        <button type="button" onClick={onEditDOB} className="icon-btn" title="Edit date of birth">
-          <EditIcon />
-        </button>
       </div>
-
-      {/* Hover trigger area - behind the controls */}
-      <div className="absolute -inset-4 -z-10" />
     </div>
   )
 }
-
-export { zoomLevels }

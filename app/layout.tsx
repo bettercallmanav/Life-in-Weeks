@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen" data-zoom="small">
+      <body className="min-h-screen" data-zoom="medium">
         {children}
       </body>
     </html>

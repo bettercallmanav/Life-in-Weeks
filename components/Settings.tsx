@@ -1,14 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { ZoomLevel } from '@/hooks/useTheme'
 
 interface SettingsProps {
   isOpen: boolean
   onClose: () => void
+  zoom: ZoomLevel
+  onZoomChange: (zoom: ZoomLevel) => void
   lifeExpectancy: number
   onLifeExpectancyChange: (value: number) => void
   onReset: () => void
 }
+
+const zoomLevels: { value: ZoomLevel; label: string }[] = [
+  { value: 'tiny', label: 'Tiny' },
+  { value: 'small', label: 'Small' },
+  { value: 'medium', label: 'Medium' },
+]
 
 const CloseIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -19,6 +28,8 @@ const CloseIcon = () => (
 export default function Settings({
   isOpen,
   onClose,
+  zoom,
+  onZoomChange,
   lifeExpectancy,
   onLifeExpectancyChange,
   onReset,
@@ -61,6 +72,26 @@ export default function Settings({
           <button onClick={onClose} className="icon-btn">
             <CloseIcon />
           </button>
+        </div>
+
+        {/* Zoom selector */}
+        <div className="mb-6">
+          <label className="text-xs uppercase tracking-widest text-muted-dark block mb-3">
+            Grid Size
+          </label>
+          <div className="flex gap-2">
+            {zoomLevels.map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => onZoomChange(value)}
+                className={`flex-1 py-2 px-3 text-xs uppercase tracking-wider rounded border transition-all zoom-btn ${
+                  zoom === value ? 'active' : ''
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Life expectancy slider */}

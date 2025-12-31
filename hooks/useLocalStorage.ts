@@ -44,17 +44,13 @@ export interface AppSettings {
   lifeExpectancy: number
   theme: 'dark' | 'light'
   zoom: 'tiny' | 'small' | 'medium'
-  showDetailedStats: boolean
-  showMilestones: boolean
 }
 
 export const defaultSettings: AppSettings = {
   dob: null,
   lifeExpectancy: 80,
   theme: 'dark',
-  zoom: 'small',
-  showDetailedStats: false,
-  showMilestones: false,
+  zoom: 'medium',
 }
 
 export function useAppSettings() {

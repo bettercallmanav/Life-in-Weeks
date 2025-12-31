@@ -151,27 +151,6 @@ body.light .grid-square.current {
   }
 }
 
-/* Milestone marker */
-.grid-square.milestone {
-  position: relative;
-}
-
-.grid-square.milestone::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px;
-  height: 3px;
-  background: #525252;
-  border-radius: 50%;
-}
-
-body.light .grid-square.milestone::after {
-  background: #a3a3a3;
-}
-
 /* Sequential fill animation */
 .grid-square.animating {
   animation: fill-in 0.1s ease-out forwards;
@@ -215,15 +194,20 @@ body.light .tooltip {
   opacity: 1;
 }
 
-/* Controls fade */
-.controls-wrapper {
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* Header bar */
+.header-bar {
+  background: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid #1a1a1a;
+  backdrop-filter: blur(8px);
 }
 
-.controls-wrapper:hover,
-.controls-wrapper.visible {
-  opacity: 1;
+body.light .header-bar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: #e5e5e5;
+}
+
+.header-controls {
+  width: 100%;
 }
 
 /* Overlay backdrop */
@@ -428,10 +412,6 @@ body.light .stat-label {
 
 /* Mobile touch improvements */
 @media (hover: none) {
-  .controls-wrapper {
-    opacity: 1;
-  }
-
   .grid-square:hover {
     transform: none;
   }
@@ -506,3 +486,39 @@ body.light .controls-bar {
   background: rgba(255, 255, 255, 0.95);
   border-color: #ddd !important;
 }
+
+/* Zoom buttons in settings */
+.zoom-btn {
+  border-color: #333;
+  color: #888;
+  background: transparent;
+  cursor: pointer;
+}
+
+.zoom-btn:hover {
+  border-color: #555;
+  color: #ccc;
+}
+
+.zoom-btn.active {
+  background: #f5f5f5;
+  color: #000;
+  border-color: #f5f5f5;
+}
+
+body.light .zoom-btn {
+  border-color: #e5e5e5;
+  color: #888;
+}
+
+body.light .zoom-btn:hover {
+  border-color: #ccc;
+  color: #333;
+}
+
+body.light .zoom-btn.active {
+  background: #0a0a0a;
+  color: #fff;
+  border-color: #0a0a0a;
+}
+
