@@ -82,34 +82,29 @@ export default function Controls({
   }, [])
 
   return (
-    <div className="header-controls flex items-center justify-between w-full px-4">
-      {/* Left side - Edit DOB */}
-      <button type="button" onClick={onEditDOB} className="icon-btn" title="Edit date of birth">
-        <EditIcon />
-      </button>
+    <>
+      {/* Top left - Edit DOB */}
+      <div className="fixed top-4 left-4 z-50">
+        <button type="button" onClick={onEditDOB} className="icon-btn" title="Edit date of birth">
+          <EditIcon />
+        </button>
+      </div>
 
-      {/* Right side - Controls */}
-      <div className="flex items-center gap-1">
-        {/* Theme toggle */}
+      {/* Top right - Controls */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-1">
         <button type="button" onClick={onThemeToggle} className="icon-btn" title="Toggle theme">
           {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
         </button>
-
-        {/* Settings */}
         <button type="button" onClick={onSettingsOpen} className="icon-btn" title="Settings">
           <SettingsIcon />
         </button>
-
-        {/* Export */}
         <button type="button" onClick={onExport} className="icon-btn" title="Download as image">
           <DownloadIcon />
         </button>
-
-        {/* Fullscreen */}
         <button type="button" onClick={handleFullscreenToggle} className="icon-btn" title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}>
           {isFullscreen ? <ExitFullscreenIcon /> : <FullscreenIcon />}
         </button>
       </div>
-    </div>
+    </>
   )
 }

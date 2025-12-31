@@ -139,19 +139,17 @@ export default function Home() {
 
   return (
     <div className={`min-h-screen flex flex-col transition-all duration-500 ${pageReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-      {/* Fixed Header Controls */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center header-bar">
-        <Controls
-          theme={settings.theme}
-          onThemeToggle={handleThemeToggle}
-          onSettingsOpen={() => setSettingsOpen(true)}
-          onExport={handleExport}
-          onEditDOB={handleEditDOB}
-        />
-      </div>
+      {/* Corner controls */}
+      <Controls
+        theme={settings.theme}
+        onThemeToggle={handleThemeToggle}
+        onSettingsOpen={() => setSettingsOpen(true)}
+        onExport={handleExport}
+        onEditDOB={handleEditDOB}
+      />
 
-      {/* Main content with padding for fixed header */}
-      <main className="flex-1 flex flex-col items-center pt-20 pb-12 px-4">
+      {/* Main content */}
+      <main className="flex-1 flex flex-col items-center pt-8 pb-12 px-4">
         {/* Title & Stats */}
         <header className="text-center mb-8">
           <h1 className="font-serif text-2xl md:text-3xl italic mb-6 opacity-80">

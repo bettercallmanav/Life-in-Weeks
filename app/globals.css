@@ -194,21 +194,6 @@ body.light .tooltip {
   opacity: 1;
 }
 
-/* Header bar */
-.header-bar {
-  background: rgba(0, 0, 0, 0.95);
-  border-bottom: 1px solid #1a1a1a;
-  backdrop-filter: blur(8px);
-}
-
-body.light .header-bar {
-  background: rgba(255, 255, 255, 0.95);
-  border-bottom-color: #e5e5e5;
-}
-
-.header-controls {
-  width: 100%;
-}
 
 /* Overlay backdrop */
 .overlay-backdrop {
