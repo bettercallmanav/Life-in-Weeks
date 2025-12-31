@@ -150,23 +150,31 @@ export default function Home() {
 
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center pt-8 pb-12 px-4">
-        {/* Title & Stats */}
-        <header className="text-center mb-8">
-          <h1 className="font-serif text-2xl md:text-3xl italic mb-6 opacity-80">
-            Life in Weeks
-          </h1>
-          <Stats
-            dob={dob}
-            lifeExpectancy={adjustedLifeExpectancy}
-          />
-        </header>
+        {/* Exportable container */}
+        <div ref={gridRef} className="export-container">
+          {/* Title & Stats */}
+          <header className="text-center mb-8">
+            <h1 className="font-serif text-2xl md:text-3xl italic mb-6 opacity-80">
+              Life in Weeks
+            </h1>
+            <Stats
+              dob={dob}
+              lifeExpectancy={adjustedLifeExpectancy}
+            />
+          </header>
 
-        {/* Grid */}
-        <div ref={gridRef} className="grid-container flex-1 overflow-auto p-4">
-          <LifeGrid
-            dob={dob}
-            lifeExpectancy={adjustedLifeExpectancy}
-          />
+          {/* Grid */}
+          <div className="grid-container flex-1 overflow-auto p-4">
+            <LifeGrid
+              dob={dob}
+              lifeExpectancy={adjustedLifeExpectancy}
+            />
+          </div>
+
+          {/* Watermark for export */}
+          <div className="export-watermark text-center mt-6 text-xs opacity-40 tracking-wider">
+            life-in-weeks-three.vercel.app
+          </div>
         </div>
       </main>
 

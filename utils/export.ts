@@ -1,40 +1,28 @@
-import { toPng } from 'html-to-image'
+import html2canvas from 'html2canvas'
 
 export async function exportGridAsImage(
   gridElement: HTMLElement,
   filename: string = 'life-in-weeks.png'
 ): Promise<void> {
   try {
-    // Get current theme
     const isLight = document.body.classList.contains('light')
 
-    // Create a wrapper with padding and background
-    const wrapper = document.createElement('div')
-    wrapper.style.padding = '40px'
-    wrapper.style.background = isLight ? '#ffffff' : '#000000'
-    wrapper.style.display = 'inline-block'
+    // Add temporary padding for export
+    const originalPadding = gridElement.style.padding
+    gridElement.style.padding = '40px'
 
-    // Clone the grid
-    const clone = gridElement.cloneNode(true) as HTMLElement
-    wrapper.appendChild(clone)
-
-    // Temporarily add to DOM (off-screen)
-    wrapper.style.position = 'fixed'
-    wrapper.style.left = '-9999px'
-    wrapper.style.top = '-9999px'
-    document.body.appendChild(wrapper)
-
-    // Generate image
-    const dataUrl = await toPng(wrapper, {
-      quality: 1,
-      pixelRatio: 2,
+    const canvas = await html2canvas(gridElement, {
       backgroundColor: isLight ? '#ffffff' : '#000000',
+      scale: 2,
+      useCORS: true,
+      logging: false,
     })
 
-    // Clean up
-    document.body.removeChild(wrapper)
+    // Restore original padding
+    gridElement.style.padding = originalPadding
 
-    // Download
+    // Convert to PNG and download
+    const dataUrl = canvas.toDataURL('image/png')
     const link = document.createElement('a')
     link.download = filename
     link.href = dataUrl
